@@ -37,7 +37,7 @@ export const SuperContextProvider: React.FC<{ children: ReactNode }> = ({
 
     try {
       setIsGen(true);
-      const response = await fetch("http://192.168.31.253:5000/chat", {
+      const response = await fetch("https://chatbot-backend-common.onrender.com/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
