@@ -41,7 +41,7 @@ export const SuperContextProvider: React.FC<{ children: ReactNode }> = ({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": process.env.NEXT_PUBLIC_API_KEY || "22",
+          "x-api-key":"hC2rNyil50ik2her" ,
         },
         body: JSON.stringify({ message }),
       });
