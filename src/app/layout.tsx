@@ -4,40 +4,23 @@ import { SuperContextProvider } from "@/Context/SuperContext";
 import Head from "next/head";
 
 export const metadata: Metadata = {
-  title: "Nikhil Katkuri | Full-Stack Developer  ",
-  description: "Portfolio of Nikhil Katkuri, a Full-Stack Developer & AI Engineer skilled in React, Next.js, Python, and more.",
-  keywords: [
-    "Full-Stack Developer",
-    "AI Engineer",
-    "Web Development",
-    "Next.js",
-    "React",
-    "Python",
-    "JavaScript",
-    "Portfolio",
-  ],
-  authors: [{ name: "Nikhil Katkuri", url:  "https://portfilo-livid.vercel.app" }],
-  metadataBase: new URL( "https://portfilo-livid.vercel.app"),
+  title: "Nikhil Katkuri | Full-Stack Developer & AI Engineer",
+  description: "Portfolio of Nikhil Katkuri, showcasing web development, AI, and software engineering projects.",
+  keywords: ["Nikhil Katkuri", "Full-Stack Developer", "AI Engineer", "Next.js", "React", "Portfolio", "Web Developer"],
+  metadataBase: new URL("https://portfilo-livid.vercel.app"),
   openGraph: {
     title: "Nikhil Katkuri | Full-Stack Developer",
     description: "Check out my portfolio of web & AI projects.",
-    url:  "https://portfilo-livid.vercel.app",
+    url: "https://portfilo-livid.vercel.app",
     siteName: "Nikhil Katkuri Portfolio",
-    images: [
-      {
-        url: "https://yourportfolio.com/og-image.jpg", 
-        width: 1200,
-        height: 630,
-        alt: "Nikhil Katkuri Portfolio",
-      },
-    ],
+    images: [{ url: "https://portfilo-livid.vercel.app/og-image.jpg", width: 1200, height: 630, alt: "Nikhil Katkuri Portfolio" }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Nikhil Katkuri Portfolio",
     description: "Explore my portfolio of web development & AI projects.",
-    images: ["https://portfilo-livid.vercel.app/og-image.jpg"]
+    images: ["https://portfilo-livid.vercel.app/twitter-image.jpg"],
   },
 };
 
