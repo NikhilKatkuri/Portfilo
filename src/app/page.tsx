@@ -118,7 +118,7 @@ const Page: FC = () => {
               initial={{ y: 60, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.6, ease: "easeInOut", delay: 0.4 }}
-              viewport={{ once: false, amount: 0.4 }}
+              viewport={{ once: false, amount: 0.2 }}
               className="p-4 rounded-lg md:rounded-xl bg-white shadow"
             >
               <article className="max-w-[90%] sm:max-w-[30rem]">
