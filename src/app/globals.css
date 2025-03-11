@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "PG_2025";
+  src: url("/fonts/ProtestGuerrilla.ttf") format("truetype");
+}
+
+
+body {
+  background: #fff;
+  color: rgba(0, 0, 0,.7);
+  font-family:'Segoe UI';
+}
+p{
+  color: rgba(0, 0, 0,.6);
+  
+}
+.css-fnt-style{
+  font-family:"PG_2025" ;
+}
+
+button ,h1,h2{
+  cursor: pointer;
+}
+.scrollbar-hidden::-webkit-scrollbar{
+  display: none;
+}
+::-webkit-scrollbar{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 4px;
+  background-color: #22222210;
+}
+::-webkit-scrollbar-thumb{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 4px;
+  background-color: #22222210;
+}
+.runner_bg { 
+  background: linear-gradient(135deg, pink, rgba(0, 0, 255, 0.3));
+  background-size: 200% 200%;
+  animation: push 2s ease-in-out infinite alternate;
+}
+
+@keyframes push {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+
+
+
