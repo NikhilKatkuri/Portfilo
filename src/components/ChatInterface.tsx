@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 
 const ChatInterFace: FC = () => {
   const { Ischat, setIschat, sendMessage, messages, isGen, query, setquery } =
@@ -21,13 +21,25 @@ const ChatInterFace: FC = () => {
     return "Unknown";
   };
   const [Platform, setPlatform] = useState("");
-
+  const divRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     setPlatform(getPlatformInfo());
     // console.log("Platform:", getPlatformInfo());
   }, []);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const pn = usePathname();
+  useEffect(() => {
+    if (divRef.current && containerRef.current) {
+      divRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+      containerRef.current.scrollTop += 50;
+    }
+  }, [messages, isGen]);
+  const MesGer = () => {
+    if (!isGen) {
+      sendMessage(query);
+    }
+  };
   return (
     <AnimatePresence mode="wait">
       <motion.main
@@ -43,9 +55,9 @@ const ChatInterFace: FC = () => {
           animateState: { opacity: 1 },
           exitState: { opacity: 0 }, // Ensure exit animation works
         }}
-        className="h-full w-full"
+        className="h-full w-full flex flex-col justify-start sm:justify-between"
       >
-        <header className="py-4 px-4 sm:px-6 md:px-8 lg:px-12 bg-white/50 backdrop-blur-sm z-20 sticky top-0 w-full flex items-center gap-3">
+        <header className="py-4 px-4 max-h-20 sm:px-6 md:px-8 lg:px-12 bg-white/50 backdrop-blur-sm z-20 sticky top-0 w-full flex items-center gap-3">
           <button
             onClick={() => {
               setIschat(!Ischat);
@@ -80,46 +92,54 @@ const ChatInterFace: FC = () => {
             </div>
           </div>
         </header>
-        <section className="h-[calc(100%-5rem)]  max-w-[94%] sm:max-w-[600px] md:max-w-[700px] flex flex-col w-full justify-between items-center mx-auto">
+        <section className="h-[calc(100%-8rem)] sm:h-[calc(100%-5rem)]    max-w-[94%] sm:max-w-[600px] md:max-w-[732px] md:pl-4  flex flex-col w-full justify-between items-center mx-auto">
           {messages.length > 0 ? (
             <div className="h-[calc(100%-7rem)] overflow-hidden rounded-md w-full flex flex-col items-center justify-center gap-4">
-              <div className="h-full pt-6 w-full overflow-y-scroll flex  flex-col gap-6 scrollbar-hidden">
-                {messages.map((t, i) => {
-                  if (t.sender !== "bot") {
+              <div className="h-full pt-6 w-full overflow-y-scroll  scrollbar-hidden  pr-4">
+                <div
+                  ref={containerRef}
+                  className="flex-1 flex flex-col gap-6 pb-8 "
+                >
+                  {messages.map((t, i) => {
+                    const isLast = i === messages.length - 1;
+                    if (t.sender !== "bot") {
+                      return (
+                        <div
+                          key={i}
+                          ref={isLast ? divRef : null}
+                          className="p-2 px-3 rounded-xl max-w-80  rounded-br-none text-neutral-950 bg-black/5 self-end"
+                        >
+                          {t.text}
+                        </div>
+                      );
+                    }
                     return (
                       <div
+                        ref={isLast ? divRef : null}
                         key={i}
-                        className="p-2 px-3 rounded-xl max-w-80  rounded-bl-none text-neutral-950 bg-black/5 self-end"
+                        className="flex flex-col gap-2 items-start min-h-10 h-auto"
                       >
-                        {t.text}
+                        <button className="w-8 h-8  rounded-md bg-black text-white">
+                          C
+                        </button>
+
+                        <div className=" rounded-xl max-w-[90%] min-h-10 rounded-bl-none   self-start">
+                          {t.text}
+                        </div>
                       </div>
                     );
-                  }
-                  return (
-                    <div
-                      key={i}
-                      className="flex flex-col gap-2 items-start min-h-10"
-                    >
-                      <button className="w-8 h-8  rounded-md bg-black text-white">
-                        C
-                      </button>
-
-                      <div className=" rounded-xl max-w-[90%] min-h-10 rounded-bl-none   self-start">
-                        {t.text}
+                  })}
+                  {isGen && (
+                    <div ref={divRef} className="flex items-center gap-3 h-10">
+                      <div className="flex gap-3 items-center">
+                        <button className="w-8 h-8  rounded-md bg-black text-white">
+                          C
+                        </button>
+                        <div className="h-10 rounded-xl max-w-[90%]  rounded-bl-none   self-start w-64 runner_bg"></div>
                       </div>
                     </div>
-                  );
-                })}
-                {isGen && (
-                  <div className="flex items-center gap-3 h-10">
-                    <div className="flex gap-3 items-center">
-                      <button className="w-8 h-8  rounded-md bg-black text-white">
-                        C
-                      </button>
-                      <div className="h-10 rounded-xl max-w-[90%]  rounded-bl-none   self-start w-64 runner_bg"></div>
-                    </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           ) : (
@@ -161,13 +181,13 @@ const ChatInterFace: FC = () => {
             </div>
           )}
           <footer
-            className={`h-24 w-full flex flex-col items-center justify-between ${
+            className={`h-20 w-full  flex flex-col items-center justify-between ${
               isKeyboardOpen &&
               !Platform.includes("Windows") &&
               !Platform.includes("MacOs") &&
               !Platform.includes("Linux")
-                ? "mb-20"
-                : ""
+                ? "mb-6"
+                : "max-sm:mb-4"
             }`}
           >
             <div className="flex items-center rounded-full pl-6 px-4 py-2 border-[1px] w-full max-w-[600px] gap-4">
@@ -183,10 +203,9 @@ const ChatInterFace: FC = () => {
                 className={`w-full outline-none text-neutral-950 `}
               />
               <button
-                onClick={() => {
-                  sendMessage(query);
-                }}
+                onClick={MesGer}
                 className="p-2 rounded-full bg-green-500/15"
+                disabled={isGen}
               >
                 <Image
                   src="/send.svg"
@@ -198,7 +217,7 @@ const ChatInterFace: FC = () => {
               </button>
             </div>
             <span
-              className={`text-xs md:text-sm ${
+              className={`text-xs  text-black max-sm:px-4 text-center py-2 ${
                 isKeyboardOpen &&
                 !Platform.includes("Windows") &&
                 !Platform.includes("MacOs") &&
