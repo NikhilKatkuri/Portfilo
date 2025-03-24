@@ -5,9 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FC, useEffect, useRef, useState } from "react";
-
+import PromptInput from "./PromptInput";
 const ChatInterFace: FC = () => {
-  const { Ischat, setIschat, sendMessage, messages, isGen, query, setquery } =
+  const { Ischat, setIschat, messages, isGen, setquery, isKeyboardOpen } =
     useSuperContext();
   const getPlatformInfo = () => {
     const userAgent = navigator.userAgent.toLowerCase();
@@ -25,21 +25,32 @@ const ChatInterFace: FC = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     setPlatform(getPlatformInfo());
-    // console.log("Platform:", getPlatformInfo());
+    
   }, []);
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+
   const pn = usePathname();
   useEffect(() => {
     if (divRef.current && containerRef.current) {
       divRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-      containerRef.current.scrollTop += 50;
+      containerRef.current.scrollTop += 350;
     }
   }, [messages, isGen]);
-  const MesGer = () => {
-    if (!isGen) {
-      sendMessage(query);
-    }
+  const textFormatter = (message: string) => {
+    if (!message?.trim()) return null;
+
+    return (
+      <span
+        dangerouslySetInnerHTML={{
+          __html: message
+            .replace(/\*\*(.*?)\*\*/g, "<b>$1</b>") // Bold (**text**)
+            .replace(/\*(.*?)\*/g, "<i>$1</i>") // Italics (*text*)
+            .replace(/`(.*?)`/g, "<code>$1</code>") // Inline code (`text`)
+            .replace(/\n/g, "<br/>"), // Preserve new lines
+        }}
+      />
+    );
   };
+
   return (
     <AnimatePresence mode="wait">
       <motion.main
@@ -92,13 +103,14 @@ const ChatInterFace: FC = () => {
             </div>
           </div>
         </header>
-        <section className="h-[calc(100%-8rem)] sm:h-[calc(100%-5rem)]    max-w-[94%] sm:max-w-[600px] md:max-w-[732px] md:pl-4  flex flex-col w-full justify-between items-center mx-auto">
+        
+        <section className="h-[calc(100%-5rem)]      max-w-[94%] sm:max-w-[600px] md:max-w-[732px] md:pl-4  flex flex-col w-full justify-between items-center mx-auto">
           {messages.length > 0 ? (
             <div className="h-[calc(100%-7rem)] overflow-hidden rounded-md w-full flex flex-col items-center justify-center gap-4">
               <div className="h-full pt-6 w-full overflow-y-scroll  scrollbar-hidden  pr-4">
                 <div
                   ref={containerRef}
-                  className="flex-1 flex flex-col gap-6 pb-8 "
+                  className="flex-1 flex flex-col gap-4 pb-8 "
                 >
                   {messages.map((t, i) => {
                     const isLast = i === messages.length - 1;
@@ -119,12 +131,11 @@ const ChatInterFace: FC = () => {
                         key={i}
                         className="flex flex-col gap-2 items-start min-h-10 h-auto"
                       >
-                        <button className="w-8 h-8  rounded-md bg-black text-white">
+                        {/* <button className="w-8 h-8  rounded-md bg-black text-white">
                           C
-                        </button>
-
-                        <div className=" rounded-xl max-w-[90%] min-h-10 rounded-bl-none   self-start">
-                          {t.text}
+                        </button> */}
+                        <div className=" rounded-xl w-full max-w-full *:text-wrap   min-h-10 rounded-bl-none    self-start font-normal ">
+                          {textFormatter(t.text)}
                         </div>
                       </div>
                     );
@@ -135,7 +146,7 @@ const ChatInterFace: FC = () => {
                         <button className="w-8 h-8  rounded-md bg-black text-white">
                           C
                         </button>
-                        <div className="h-10 rounded-xl max-w-[90%]  rounded-bl-none   self-start w-64 runner_bg"></div>
+                        <div className="h-10 rounded-xl max-w-[90%]  rounded-bl-none   self-start w-64 runner_bg text-black"></div>
                       </div>
                     </div>
                   )}
@@ -181,41 +192,22 @@ const ChatInterFace: FC = () => {
             </div>
           )}
           <footer
-            className={`h-20 w-full  flex flex-col items-center justify-between ${
+          ref={(e) => {
+            if (isKeyboardOpen && e) {
+              e.scrollIntoView({ behavior: "smooth", block: "end" });
+            }
+          }}
+          
+            className={`py-3 w-full  flex flex-col items-center justify-between ${
               isKeyboardOpen &&
               !Platform.includes("Windows") &&
               !Platform.includes("MacOs") &&
               !Platform.includes("Linux")
-                ? "mb-6"
+                ? "mb-12"
                 : "max-sm:mb-4"
             }`}
           >
-            <div className="flex items-center rounded-full pl-6 px-4 py-2 border-[1px] w-full max-w-[600px] gap-4">
-              <input
-                placeholder="Ask Anything"
-                type="text"
-                value={query}
-                onChange={(e) => {
-                  setquery(e.target.value);
-                }}
-                onFocus={() => setIsKeyboardOpen(true)}
-                onBlur={() => setIsKeyboardOpen(false)}
-                className={`w-full outline-none text-neutral-950 `}
-              />
-              <button
-                onClick={MesGer}
-                className="p-2 rounded-full bg-green-500/15"
-                disabled={isGen}
-              >
-                <Image
-                  src="/send.svg"
-                  alt="sender"
-                  width={24}
-                  height={24}
-                  className="size-4  "
-                />
-              </button>
-            </div>
+            <PromptInput />
             <span
               className={`text-xs  text-black max-sm:px-4 text-center py-2 ${
                 isKeyboardOpen &&

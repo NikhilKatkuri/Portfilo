@@ -13,6 +13,8 @@ type SuperContextType = {
   setIsGen: (isGen: boolean) => void;
   query: string;
   setquery: (query: string) => void;
+  isKeyboardOpen:boolean;
+   setIsKeyboardOpen:(isKeyboardOpen:boolean)=>void;
 };
 
 // Create the context
@@ -28,7 +30,7 @@ export const SuperContextProvider: React.FC<{ children: ReactNode }> = ({
   >([]);
   const [isGen, setIsGen] = useState(false);
   const [query, setquery] = useState<string>("");
-
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   async function sendMessage(message: string) {
     if (!message.trim()) return;
 
@@ -48,10 +50,12 @@ export const SuperContextProvider: React.FC<{ children: ReactNode }> = ({
 
       const data = await response.json();
 
+
       // Append bot response
       setMessages((prev) => [...prev, { text: data.reply, sender: "bot" }]);
       setIsGen(false);
-      setquery("");
+      setquery(""); 
+      console.log(data.reply)
       return data.reply;
     } catch (error) {
       console.error("Error fetching chat response:", error);
@@ -69,6 +73,7 @@ export const SuperContextProvider: React.FC<{ children: ReactNode }> = ({
         setIsGen,
         query,
         setquery,
+        isKeyboardOpen, setIsKeyboardOpen
       }}
     >
       <motion.div

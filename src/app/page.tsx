@@ -3,14 +3,60 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
-import { FC } from "react";
+import { FC, useRef } from "react";
 import { motion } from "framer-motion";
+import SkillsUI from "@/components/SkillsUI";
 const Page: FC = () => {
   const ani = {
     initial: { y: 30, opacity: 0 },
     animate: { y: 0, opacity: 1 },
     transition: { duration: 1 },  
   };
+  const btnRef = useRef<HTMLButtonElement>(null);
+
+  // const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+  //   const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+  //   const x = ((e.clientX - left) / width - 0.5) * 600; 
+  //   const y = ((e.clientY - top) / height - 0.5) * 600;  
+  //   const xt = ((e.clientX - left) / width - 0.5) * 400; 
+  //   const yt = ((e.clientY - top) / height - 0.5) * 400;  
+
+  //   if (btnRef.current) {
+  //     btnRef.current.style.transform = `perspective(300px) rotateX(${y}deg) rotateY(${-x}deg) translateX(${yt}px) translateY(${-xt}px) scale(1)`;
+  //   }
+  // };
+  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    
+    // Normalize values between -1 and 1
+    const x = ((e.clientX - left) / width - 0.5) * 5;
+    const y = ((e.clientY - top) / height - 0.5) * 5;
+
+    // Adjust sensitivity (lower values for a smoother effect)
+    const rotateX = y * 100; // Max 10 degrees
+    const rotateY = -x * 100; // Max -10 degrees
+    const translateX = x * 400; // Moves left/right
+    const translateY = y * 400; // Moves up/down
+
+    if (btnRef.current) {
+      btnRef.current.style.transform = `
+        perspective(300px) 
+        rotateX(${rotateX}deg) 
+        rotateY(${rotateY}deg) 
+        translateX(${translateX}px) 
+        translateY(${translateY}px) 
+        scale(1.05)
+      `;
+    }
+  };
+
+  const resetTransform = () => {
+    if (btnRef.current) {
+      btnRef.current.style.transform = "perspective(300px) rotateX(0) rotateY(0) translateX(0) translateY(0) scale(1)";
+    }
+  };
+
+ 
 
   return (
     <>
@@ -141,16 +187,30 @@ const Page: FC = () => {
                   challenges and technologies.
                 </p>
               </article>
+              <button
+                // className="button-3d"
+                // ref={btnRef}
+                // onMouseMove={handleMouseMove}
+                // onMouseLeave={resetTransform}
+                ref={btnRef}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={resetTransform}
+                className="px-6 py-2 mt-3 rounded-full bg-[#171717] text-white font-bold text-sm
+                           transition-all duration-300 shadow-lg border border-neutral-800"
+              >
+               👀 View Resume
+              </button>
               {/* <button className="px-4 py-2 active:scale-95 rounded-full bg-[#171717] my-2 text-white shadow">
               👀 View Resume
               </button> */}
-              <span className="text-lg font-semibold py-2 text-neutral-950">
+              {/* <span className="text-lg font-semibold py-2 text-neutral-950">
                 Currently building Projects
-              </span>
+              </span> */}
             </motion.div>
           </div>
         </div>
       </section>
+      <SkillsUI/>
       <Footer />
     </>
   );

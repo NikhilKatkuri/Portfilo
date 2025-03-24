@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { SuperContextProvider } from "@/Context/SuperContext";
-import Head from "next/head";
+// import HighlightLoader from "@/components/HighlightLoader";
 
 export const metadata: Metadata = {
   title: "Nikhil Katkuri | Full-Stack Developer & AI Engineer",
@@ -32,7 +32,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-        <Head>
+        <head>
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+        />
         <title>Nikhil Katkuri | Full-Stack Developer & AI Engineer</title>
         <meta name="description" content="Full-Stack Developer & AI Engineer skilled in Next.js, React, and Python." />
         <meta name="keywords" content="Full-Stack Developer, AI Engineer, Next.js, React, Python, Web Development" />
@@ -45,8 +49,12 @@ export default function RootLayout({
         <meta name="twitter:title" content="Nikhil Katkuri Portfolio" />
         <meta name="twitter:description" content="Explore my portfolio of web development & AI projects." />
         <meta name="twitter:image" content="https://yourportfolio.com/twitter-image.jpg" />
-      </Head>
+       
+      </head>
+      
       <body className={`antialiased`}>
+
+        {/* <HighlightLoader /> */}
         <SuperContextProvider>{children}</SuperContextProvider>
       </body>
     </html>

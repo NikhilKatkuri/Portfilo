@@ -10,6 +10,7 @@ body {
   background: #fff;
   color: rgba(0, 0, 0,.7);
   font-family:'Segoe UI';
+  user-select: none;
 }
 p{
   color: rgba(0, 0, 0,.6);
@@ -55,3 +56,18 @@ button ,h1,h2{
 
 
 
+.button-3d {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 999px;
+  background: #171717;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  perspective: 1000px;
+}
+ 
