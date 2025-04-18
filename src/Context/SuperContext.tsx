@@ -39,11 +39,11 @@ export const SuperContextProvider: React.FC<{ children: ReactNode }> = ({
     // Append user message
     setMessages((prev) => [...prev, { text: message, sender: "user" }]);
 
-    const url = "http://192.168.31.253:5000/chat";
-    // const back ="https://chatbot-backend-common.onrender.com/chat";
+    // const url = "http://192.168.31.253:5000/chat";
+    const back ="https://chatbot-backend-common.onrender.com/chat";
     try {
       setIsGen(true);
-      const response = await fetch(url, {
+      const response = await fetch(back, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
