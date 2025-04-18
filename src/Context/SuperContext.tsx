@@ -1,7 +1,6 @@
 "use client";
-import ChatInterFace from "@/components/ChatInterface";
 import { createContext, useContext, useState, ReactNode } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 // Define the context type
 type SuperContextType = {
@@ -13,8 +12,10 @@ type SuperContextType = {
   setIsGen: (isGen: boolean) => void;
   query: string;
   setquery: (query: string) => void;
-  isKeyboardOpen:boolean;
-   setIsKeyboardOpen:(isKeyboardOpen:boolean)=>void;
+  isKeyboardOpen: boolean;
+  setIsKeyboardOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isListening: boolean;
+  setIsListening: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 // Create the context
@@ -28,6 +29,7 @@ export const SuperContextProvider: React.FC<{ children: ReactNode }> = ({
   const [messages, setMessages] = useState<
     { text: string; sender: "user" | "bot" }[]
   >([]);
+  const [isListening, setIsListening] = useState(false);
   const [isGen, setIsGen] = useState(false);
   const [query, setquery] = useState<string>("");
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
@@ -37,25 +39,26 @@ export const SuperContextProvider: React.FC<{ children: ReactNode }> = ({
     // Append user message
     setMessages((prev) => [...prev, { text: message, sender: "user" }]);
 
+    const url = "http://192.168.31.253:5000/chat";
+    // const back ="https://chatbot-backend-common.onrender.com/chat";
     try {
       setIsGen(true);
-      const response = await fetch("https://chatbot-backend-common.onrender.com/chat", {
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key":"hC2rNyil50ik2her" ,
+          "x-api-key": "hC2rNyil50ik2her",
         },
         body: JSON.stringify({ message }),
       });
 
       const data = await response.json();
 
-
       // Append bot response
       setMessages((prev) => [...prev, { text: data.reply, sender: "bot" }]);
       setIsGen(false);
-      setquery(""); 
-      console.log(data.reply)
+      setquery("");
+      console.log(data.reply);
       return data.reply;
     } catch (error) {
       console.error("Error fetching chat response:", error);
@@ -73,7 +76,10 @@ export const SuperContextProvider: React.FC<{ children: ReactNode }> = ({
         setIsGen,
         query,
         setquery,
-        isKeyboardOpen, setIsKeyboardOpen
+        isKeyboardOpen,
+        setIsKeyboardOpen,
+        isListening,
+        setIsListening,
       }}
     >
       <motion.div
@@ -82,33 +88,6 @@ export const SuperContextProvider: React.FC<{ children: ReactNode }> = ({
       >
         {children}
       </motion.div>
-
-      <AnimatePresence>
-        {Ischat && (
-          <>
-            <motion.div
-              key="overlay"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed top-0 left-0 w-full h-full bg-black/50 backdrop-blur-sm z-30"
-              onClick={() => setIschat(false)}
-            />
-
-            <motion.div
-              key="chat"
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "100%" }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-              className="fixed top-0 right-0 z-40 bg-white h-screen w-screen shadow-lg"
-            >
-              <ChatInterFace />
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
     </SuperContext.Provider>
   );
 };

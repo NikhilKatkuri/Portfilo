@@ -8,37 +8,45 @@
 
 body {
   background: #fff;
-  color: rgba(0, 0, 0,.7);
-  font-family:'Segoe UI';
+  color: rgba(0, 0, 0, .7);
+  font-family: 'Segoe UI';
   user-select: none;
 }
-p{
-  color: rgba(0, 0, 0,.6);
-  
-}
-.css-fnt-style{
-  font-family:"PG_2025" ;
+
+p {
+  color: rgba(0, 0, 0, .6);
+
 }
 
-button ,h1,h2{
+.css-fnt-style {
+  font-family: "PG_2025";
+}
+
+button,
+h1,
+h2 {
   cursor: pointer;
 }
-.scrollbar-hidden::-webkit-scrollbar{
+
+.scrollbar-hidden::-webkit-scrollbar {
   display: none;
 }
-::-webkit-scrollbar{
+
+::-webkit-scrollbar {
   -webkit-appearance: none;
   appearance: none;
   width: 4px;
   background-color: #22222210;
 }
-::-webkit-scrollbar-thumb{
+
+::-webkit-scrollbar-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 4px;
   background-color: #22222210;
 }
-.runner_bg { 
+
+.runner_bg {
   background: linear-gradient(135deg, pink, rgba(0, 0, 255, 0.3));
   background-size: 200% 200%;
   animation: push 2s ease-in-out infinite alternate;
@@ -48,6 +56,7 @@ button ,h1,h2{
   0% {
     background-position: 0% 0%;
   }
+
   100% {
     background-position: 100% 100%;
   }
@@ -69,5 +78,11 @@ button ,h1,h2{
   transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   perspective: 1000px;
+  transform: translateX();
 }
- 
+
+.link-format {
+  color: oklch(0.588 0.158 241.966);
+  cursor: pointer;
+
+}
