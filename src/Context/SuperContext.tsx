@@ -1,6 +1,7 @@
 "use client";
 import { createContext, useContext, useState, ReactNode } from "react";
 import { motion } from "framer-motion";
+import MiniPlayer from "@/components/ui/miniPlayer";
 
 // Define the context type
 type SuperContextType = {
@@ -16,6 +17,11 @@ type SuperContextType = {
   setIsKeyboardOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isListening: boolean;
   setIsListening: React.Dispatch<React.SetStateAction<boolean>>;
+  player: {
+    is: boolean;
+    url: string;
+  };
+  setplayer: (player: { is: boolean; url: string }) => void;
 };
 
 // Create the context
@@ -33,17 +39,21 @@ export const SuperContextProvider: React.FC<{ children: ReactNode }> = ({
   const [isGen, setIsGen] = useState(false);
   const [query, setquery] = useState<string>("");
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+  const [player, setplayer] = useState({
+    is: false,
+    url: "",
+  });
   async function sendMessage(message: string) {
     if (!message.trim()) return;
 
     // Append user message
     setMessages((prev) => [...prev, { text: message, sender: "user" }]);
 
-    // const url = "http://192.168.31.253:5000/chat";
-    const back ="https://chatbot-backend-common.onrender.com/chat";
+    const url = "http://192.168.31.253:5000/chat";
+    // const url = "https://chatbot-backend-common.onrender.com/chat";
     try {
       setIsGen(true);
-      const response = await fetch(back, {
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -80,12 +90,15 @@ export const SuperContextProvider: React.FC<{ children: ReactNode }> = ({
         setIsKeyboardOpen,
         isListening,
         setIsListening,
+        player,
+        setplayer,
       }}
     >
       <motion.div
         className="transition-all duration-300"
         animate={{ opacity: Ischat ? 0.5 : 1 }}
       >
+        <MiniPlayer />
         {children}
       </motion.div>
     </SuperContext.Provider>

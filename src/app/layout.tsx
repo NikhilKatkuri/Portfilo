@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { SuperContextProvider } from "@/Context/SuperContext";
-// import HighlightLoader from "@/components/HighlightLoader";
-
+ 
 export const metadata: Metadata = {
   title: "Nikhil Katkuri | Full-Stack Developer & AI Engineer",
   description:
@@ -86,7 +85,9 @@ export default function RootLayout({
 
       <body className={`antialiased`}>
         {/* <HighlightLoader /> */}
-        <SuperContextProvider>{children}</SuperContextProvider>
+        <SuperContextProvider>{children}
+
+        </SuperContextProvider>
       </body>
     </html>
   );

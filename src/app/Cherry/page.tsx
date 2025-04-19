@@ -16,6 +16,7 @@ const Page: FC = () => {
     query,
     setIsKeyboardOpen,
     isListening,
+    player, setplayer
   } = useSuperContext();
   const getPlatformInfo = () => {
     const userAgent = navigator.userAgent.toLowerCase();
@@ -85,10 +86,7 @@ const Page: FC = () => {
       MesGer();
     }
   };
-  const [player, setplayer] = useState({
-    is: false,
-    url: "",
-  });
+  
   useEffect(() => {
     const botMessages = messages
       .filter((t) => t.sender === "bot")
@@ -113,7 +111,7 @@ const Page: FC = () => {
         });
       }
     }
-  }, [messages, isGen]);
+  }, [messages, isGen, setplayer]);
   const router = useRouter();
   const [copied, setCopied] = useState({
     id: 0,
@@ -151,6 +149,40 @@ const Page: FC = () => {
     } catch (err) {
       console.error("Failed to copy!", err);
     }
+  };
+  const SupriseTrack = () => {
+    const messages = [
+      // Telugu  
+      "play Adhento Gaani Vunnapaatuga (Telugu) - Jersey song",
+      "play Naatu Naatu (Telugu) - RRR song",
+      "play Samajavaragamana (Telugu) - Ala Vaikunthapurramuloo song",
+      "play Butta Bomma (Telugu) - Ala Vaikunthapurramuloo song",
+      "play Inthandham (Telugu) - Sita Ramam song",
+      "play Srivalli (Telugu) - Pushpa song",
+      "play Dosti (Telugu) - RRR song",
+      "play Almost Padipoyindhe Pilla (Telugu) - Das Ka Dhamki song",
+      "play Ramuloo Ramulaa (Telugu) - Ala Vaikunthapurramuloo song", 
+      "play Sound of Salaar (Telugu) - Salaar song",
+    
+      // Hindi 
+      "play Chaleya (Hindi) - Jawan song",
+      "play Kesariya (Hindi) - Brahmastra song",
+      "play Tum Hi Ho (Hindi) - Aashiqui 2 song",
+      "play Apna Bana Le (Hindi) - Bhediya song",
+      "play Shayad (Hindi) - Love Aaj Kal song",
+      "play Tujhe Kitna Chahne Lage (Hindi) - Kabir Singh song",
+      "play Dil Diyan Gallan (Hindi) - Tiger Zinda Hai song",
+      "play Ghungroo (Hindi) - War song",
+    
+      //  English 
+      "play Blinding Lights (English) - The Weeknd",
+      "play Perfect (English) - Ed Sheeran"
+    ];
+    
+
+    const randomIndex = Math.floor(Math.random() * messages.length);
+    setquery(messages[randomIndex]);
+    sendMessage(messages[randomIndex]);
   };
   return (
     <div className="h-screen w-screen bg-white flex flex-col overflow-y-hidden">
@@ -293,54 +325,133 @@ const Page: FC = () => {
                     </div>
                   </div>
                 )}
-                {
-                  <div className="hidden">
-                    <iframe
-                      width="560"
-                      height="315"
-                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                      src={`https://www.youtube.com/embed/${
-                        player.url.split("v=")[1]
-                      }?autoplay=1&mute=0`}
-                    ></iframe>
-                  </div>
-                }
+               
               </div>
             </div>
           </div>
         ) : (
-          <div className="row-span-1 h-full  w-full flex flex-col items-center justify-center gap-4">
-            <h2 className="text-lg sm:text-xl md:text-2xl text-center font-semibold text-slate-900">
-              Powered by Gemini AI .Cherry delivering intelligent and fast
-              responses.
-            </h2>
-            <div className="flex flex-wrap gap-3">
-              <div
-                onClick={() => {
-                  setquery(" What makes Nikhil stand out as a developer?");
-                }}
-                className="flex px-6 py-2 rounded-lg border-[1px]"
+          <div className="row-span-1 h-full w-full flex flex-col items-center justify-center gap-6  p-6 rounded-xl ">
+            <h2 className="text-xl md:text-2xl text-center font-bold text-slate-900 flex items-center gap-2">
+              {/* <Sparkles className="text-purple-600" /> */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-green-600"
               >
-                <p className="flex flex-col">
-                  <span className="font-semibold text-slate-950">
-                    What makes Nikhil
-                  </span>
-                  stand out as a developer?
+                <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+                <path d="M20 3v4" />
+                <path d="M22 5h-4" />
+                <path d="M4 17v2" />
+                <path d="M5 18H3" />
+              </svg>
+              Powered by Gemini AI - Cherry
+            </h2>
+            <p className="text-center text-slate-700 max-w-2xl">
+              Ask Cherry anything! It delivers intelligent and fast responses to
+              help you get to know Nikhil&apos;s developer journey, skills, and
+              more.
+            </p>
+
+            <div className="flex flex-wrap justify-center gap-4 mt-4">
+              <div
+                onClick={() =>
+                  setquery("What makes Nikhil stand out as a developer?")
+                }
+                className="flex items-center gap-3 px-5 py-3 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 cursor-pointer transition"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-green-600"
+                >
+                  <path d="M12 20v2" />
+                  <path d="M12 2v2" />
+                  <path d="M17 20v2" />
+                  <path d="M17 2v2" />
+                  <path d="M2 12h2" />
+                  <path d="M2 17h2" />
+                  <path d="M2 7h2" />
+                  <path d="M20 12h2" />
+                  <path d="M20 17h2" />
+                  <path d="M20 7h2" />
+                  <path d="M7 20v2" />
+                  <path d="M7 2v2" />
+                  <rect x="4" y="4" width="16" height="16" rx="2" />
+                  <rect x="8" y="8" width="8" height="8" rx="1" />
+                </svg>
+                <p className="text-sm md:text-base">
+                  <span className="font-semibold">What makes Nikhil</span> stand
+                  out as a developer?
+                </p>
+              </div>
+
+              <div
+                onClick={() =>
+                  setquery(
+                    "What technologies does Nikhil use for scalable web development?"
+                  )
+                }
+                className="flex items-center gap-3 px-5 py-3 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 cursor-pointer transition"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-green-600"
+                >
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+                <p className="text-sm md:text-base">
+                  <span className="font-semibold">
+                    Technologies Nikhil uses
+                  </span>{" "}
+                  for scalable web development?
                 </p>
               </div>
               <div
-                onClick={() => {
-                  setquery(
-                    "What technologies does Nikhil use  for scalable web development?"
-                  );
-                }}
-                className="flex px-6 py-2 rounded-lg border-[1px]"
+                onClick={SupriseTrack}
+                className="flex items-center gap-3 px-5 py-3 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 cursor-pointer transition"
               >
-                <p className="flex flex-col">
-                  <span className="font-semibold text-slate-950">
-                    What technologies does Nikhil use
-                  </span>
-                  for scalable web development?
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-green-600"
+                >
+                  <path d="M9 18V5l12-2v13" />
+                  <circle cx="6" cy="18" r="3" />
+                  <circle cx="18" cy="16" r="3" />
+                </svg>
+                <p className="text-sm md:text-base text-slate-800">
+                  <span className="font-semibold text-slate-950">Play</span> a
+                  surprise track 🎧
                 </p>
               </div>
             </div>
@@ -372,7 +483,7 @@ const Page: FC = () => {
             <textarea
               placeholder="Type here..."
               className="w-full outline-none resize-none  "
-              maxLength={1000*10}
+              maxLength={1000 * 10}
               rows={1}
               value={query}
               onChange={handleInput}
@@ -383,6 +494,7 @@ const Page: FC = () => {
           </div>
           <div className="flex items-center justify-between">
             <div
+             onClick={SupriseTrack}
               className={`px-3  flex items-center gap-3 h-9 rounded-full  text-[13px] font-medium ${
                 player.is ? " bg-green-500" : " bg-green-50"
               } hover:bg-green-500 transition-all duration-200 ease-in-out group`}

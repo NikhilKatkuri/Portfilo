@@ -5,29 +5,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { FC, useRef } from "react";
 import { motion } from "framer-motion";
-import SkillsUI from "@/components/SkillsUI";
+import SkillsUI from "@/components/SkillsUI"; 
 const Page: FC = () => {
   const ani = {
     initial: { y: 30, opacity: 0 },
     animate: { y: 0, opacity: 1 },
-    transition: { duration: 1 },  
+    transition: { duration: 1 },
   };
   const btnRef = useRef<HTMLButtonElement>(null);
 
-  // const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-  //   const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
-  //   const x = ((e.clientX - left) / width - 0.5) * 600; 
-  //   const y = ((e.clientY - top) / height - 0.5) * 600;  
-  //   const xt = ((e.clientX - left) / width - 0.5) * 400; 
-  //   const yt = ((e.clientY - top) / height - 0.5) * 400;  
-
-  //   if (btnRef.current) {
-  //     btnRef.current.style.transform = `perspective(300px) rotateX(${y}deg) rotateY(${-x}deg) translateX(${yt}px) translateY(${-xt}px) scale(1)`;
-  //   }
-  // };
   const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
-    
+    const { left, top, width, height } =
+      e.currentTarget.getBoundingClientRect();
+
     // Normalize values between -1 and 1
     const x = ((e.clientX - left) / width - 0.5) * 5;
     const y = ((e.clientY - top) / height - 0.5) * 5;
@@ -52,11 +42,10 @@ const Page: FC = () => {
 
   const resetTransform = () => {
     if (btnRef.current) {
-      btnRef.current.style.transform = "perspective(300px) rotateX(0) rotateY(0) translateX(0) translateY(0) scale(1)";
+      btnRef.current.style.transform =
+        "perspective(300px) rotateX(0) rotateY(0) translateX(0) translateY(0) scale(1)";
     }
   };
-
- 
 
   return (
     <>
@@ -198,7 +187,7 @@ const Page: FC = () => {
                 className="px-6 py-2 mt-3 rounded-full bg-[#171717] text-white font-bold text-sm
                            transition-all duration-300 shadow-lg border border-neutral-800"
               >
-               👀 View Resume
+                👀 View Resume
               </button>
               {/* <button className="px-4 py-2 active:scale-95 rounded-full bg-[#171717] my-2 text-white shadow">
               👀 View Resume
@@ -210,8 +199,9 @@ const Page: FC = () => {
           </div>
         </div>
       </section>
-      <SkillsUI/>
+      <SkillsUI />
       <Footer />
+     
     </>
   );
 };
