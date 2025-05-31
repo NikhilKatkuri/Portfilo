@@ -24,12 +24,12 @@ Welcome to my **Portfolio Website**! 🚀 This project showcases my skills, proj
 
 ## 🚀 Installation & Setup
 
-⚠️ **Note:** This is a private repository, so cloning is not allowed.  
+⚠️ **Note:** This is a personal repository, so cloning is not allowed.  
 
 If you are a collaborator, you must have access to the repository to contribute.
 
 ### Steps for Authorized Users:
-1. **Request access** from the repository owner.  
+1. **Request access** from the repository from Nikhil(owner).  
 2. Once granted access, clone the repo:  
    ```bash
    git clone https://github.com/NikhilKatkuri/Portfolio.git
