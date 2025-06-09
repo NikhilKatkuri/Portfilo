@@ -49,8 +49,11 @@ export const SuperContextProvider: React.FC<{ children: ReactNode }> = ({
     // Append user message
     setMessages((prev) => [...prev, { text: message, sender: "user" }]);
 
-    // const url = "http://192.168.31.253:5000/chat";
-    const url = "https://chatbot-backend-common.onrender.com/chat";
+    // const url = "http://localhost:5000/chat";
+    const url = "http://192.168.190.115:5000/chat";
+    // const url = "http://192.168 .31.253:5000/chat";
+    // const url = "http://192.168.86.115:5000/chat";
+    // const url = "https://chatbot-backend-common.onrender.com/chat";
     try {
       setIsGen(true);
       const response = await fetch(url, {
@@ -68,7 +71,7 @@ export const SuperContextProvider: React.FC<{ children: ReactNode }> = ({
       setMessages((prev) => [...prev, { text: data.reply, sender: "bot" }]);
       setIsGen(false);
       setquery("");
-      console.log(data.reply);
+      console.log(data.reply); 
       return data.reply;
     } catch (error) {
       console.error("Error fetching chat response:", error);

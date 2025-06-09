@@ -1,5 +1,40 @@
 @import "tailwindcss";
 
+:root {
+  --badge-purple-bg: #9162c015;
+  --badge-purple-fg: #9162c0;
+
+  --badge-green-bg: #449d5d15;
+  --badge-green-fg: #449d5d;
+
+  --badge-amber-bg: #d1772415;
+  --badge-amber-fg: #d17724;
+
+  --badge-blue-bg: #3b88e915;
+  --badge-blue-fg: #3b88e9;
+}
+
+.badge-purple {
+  background-color: var(--badge-purple-bg);
+  color: var(--badge-purple-fg);
+}
+
+.badge-green {
+  background-color: var(--badge-green-bg);
+  color: var(--badge-green-fg);
+}
+
+.badge-amber {
+  background-color: var(--badge-amber-bg);
+  color: var(--badge-amber-fg);
+}
+
+.badge-blue {
+  background-color: var(--badge-blue-bg);
+  color: var(--badge-blue-fg);
+}
+
+
 @font-face {
   font-family: "PG_2025";
   src: url("/fonts/ProtestGuerrilla.ttf") format("truetype");
@@ -85,4 +120,4 @@ h2 {
   color: oklch(0.588 0.158 241.966);
   cursor: pointer;
 
-}
+} 

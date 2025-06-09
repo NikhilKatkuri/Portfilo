@@ -16,7 +16,8 @@ const Page: FC = () => {
     query,
     setIsKeyboardOpen,
     isListening,
-    player, setplayer
+    player,
+    setplayer,
   } = useSuperContext();
   const getPlatformInfo = () => {
     const userAgent = navigator.userAgent.toLowerCase();
@@ -50,14 +51,14 @@ const Page: FC = () => {
       <span
         dangerouslySetInnerHTML={{
           __html: message
-            .replace(/\*\*(.*?)\*\*/g, "<b>$1</b>") // Bold: **text**
-            .replace(/\*(.*?)\*/g, "<i>$1</i>") // Italics: *text*
-            .replace(/`(.*?)`/g, "<code>$1</code>") // Inline code: `text`
-            .replace(/\n/g, "<br/>") // Newlines to <br>
+            .replace(/\*\*(.*?)\*\*/g, "<b>$1</b>")
+            .replace(/\*(.*?)\*/g, "<i>$1</i>")
+            .replace(/`(.*?)`/g, "<code>$1</code>")
+            .replace(/\n/g, "<br/>").split("*").join("")
             .replaceAll(
               /<uri>(.*?)<\/uri>/g,
               "<a href='$1' class='link-format' target='_blank' rel='noopener noreferrer'>$1</a>"
-            ), // Handle <uri> links correctly
+            ),
         }}
       />
     );
@@ -86,7 +87,7 @@ const Page: FC = () => {
       MesGer();
     }
   };
-  
+
   useEffect(() => {
     const botMessages = messages
       .filter((t) => t.sender === "bot")
@@ -152,7 +153,7 @@ const Page: FC = () => {
   };
   const SupriseTrack = () => {
     const messages = [
-      // Telugu  
+      // Telugu
       "play Adhento Gaani Vunnapaatuga (Telugu) - Jersey song",
       "play Naatu Naatu (Telugu) - RRR song",
       "play Samajavaragamana (Telugu) - Ala Vaikunthapurramuloo song",
@@ -161,10 +162,10 @@ const Page: FC = () => {
       "play Srivalli (Telugu) - Pushpa song",
       "play Dosti (Telugu) - RRR song",
       "play Almost Padipoyindhe Pilla (Telugu) - Das Ka Dhamki song",
-      "play Ramuloo Ramulaa (Telugu) - Ala Vaikunthapurramuloo song", 
+      "play Ramuloo Ramulaa (Telugu) - Ala Vaikunthapurramuloo song",
       "play Sound of Salaar (Telugu) - Salaar song",
-    
-      // Hindi 
+
+      // Hindi
       "play Chaleya (Hindi) - Jawan song",
       "play Kesariya (Hindi) - Brahmastra song",
       "play Tum Hi Ho (Hindi) - Aashiqui 2 song",
@@ -173,12 +174,11 @@ const Page: FC = () => {
       "play Tujhe Kitna Chahne Lage (Hindi) - Kabir Singh song",
       "play Dil Diyan Gallan (Hindi) - Tiger Zinda Hai song",
       "play Ghungroo (Hindi) - War song",
-    
-      //  English 
+
+      //  English
       "play Blinding Lights (English) - The Weeknd",
-      "play Perfect (English) - Ed Sheeran"
+      "play Perfect (English) - Ed Sheeran",
     ];
-    
 
     const randomIndex = Math.floor(Math.random() * messages.length);
     setquery(messages[randomIndex]);
@@ -325,7 +325,6 @@ const Page: FC = () => {
                     </div>
                   </div>
                 )}
-               
               </div>
             </div>
           </div>
@@ -494,7 +493,7 @@ const Page: FC = () => {
           </div>
           <div className="flex items-center justify-between">
             <div
-             onClick={SupriseTrack}
+              onClick={SupriseTrack}
               className={`px-3  flex items-center gap-3 h-9 rounded-full  text-[13px] font-medium ${
                 player.is ? " bg-green-500" : " bg-green-50"
               } hover:bg-green-500 transition-all duration-200 ease-in-out group`}

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@types/dom-speech-recognition": "^0.0.6",
+    "@types/styled-components": "^5.1.34",
     "framer-motion": "^12.4.11",
     "highlight.js": "^11.11.1",
     "lang-detector": "^1.0.6",
@@ -17,7 +18,8 @@
     "next-sitemap": "^4.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-syntax-highlighter": "^5.8.0"
+    "react-syntax-highlighter": "^5.8.0",
+    "styled-components": "^6.1.18"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
