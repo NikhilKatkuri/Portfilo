@@ -29,7 +29,7 @@ const itemVariants = {
 const SkillsUI: FC = () => {
   return (
     <section
-      className="py-12 px-4 bg-gray-50 dark:bg-gray-900"
+      className="py-12 px-4 bg-gray-50 "
       aria-labelledby="skills-heading"
     >
       <div className="max-w-5xl mx-auto">
@@ -39,7 +39,7 @@ const SkillsUI: FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="text-3xl font-bold text-center css-fnt-style tracking-wider text-gray-900 dark:text-white mb-8"
+          className="text-3xl font-bold text-center css-fnt-style tracking-wider text-gray-900  mb-8"
         >
           Skills
         </motion.h2>
@@ -51,7 +51,7 @@ const SkillsUI: FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4"
+              className="text-xl font-semibold text-gray-800  mb-4"
             >
               {category.category}
             </motion.h3>
@@ -66,7 +66,7 @@ const SkillsUI: FC = () => {
                 <motion.div
                   key={skill.title}
                   variants={itemVariants}
-                  className="flex items-start gap-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
+                  className="flex items-start gap-4 p-4 bg-white  rounded-lg shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
                   role="article"
                   aria-label={`Skill: ${skill.title}`}
                 >
@@ -80,14 +80,14 @@ const SkillsUI: FC = () => {
                     unoptimized={skill.icon.includes("upload.wikimedia")}
                   />
                   <div className="flex-1">
-                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    <h4 className="text-lg font-semibold text-gray-900 ">
                       {skill.title}
                     </h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                    <p className="text-sm text-gray-600  mb-2">
                       {skill.desc}
                     </p>
                     {skill.proficiency && (
-                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="w-full bg-gray-50 rounded-full h-2">
                         <div
                           className="bg-slate-950 h-2 rounded-full transition-all ease-in-out duration-300"
                           style={{ width: `${skill.proficiency}%` }}
